@@ -11,7 +11,7 @@ using Xamarin.Forms.Platform.Android;
 
 namespace SharePointPTSample.Droid
 {
-    [Activity(Label = "SharePointPTSample", MainLauncher = true)]
+    [Activity(Label = "Office 365 REST API Sample", MainLauncher = true)]
     public class MainActivity : AndroidActivity
     {
         protected override void OnCreate(Bundle bundle)

@@ -25,7 +25,9 @@ namespace SharePointPTSample.Views
             {
                 title = new Label
                 {
-                    XAlign = TextAlignment.Center, Text = Title, Font = Font.SystemFontOfSize(42)
+                    XAlign = TextAlignment.Center,
+                    Text = Title,
+                    Font = Font.SystemFontOfSize(42)
                 };
             }
 
@@ -38,10 +40,10 @@ namespace SharePointPTSample.Views
             var emailEntry = new Entry();
             emailEntry.SetBinding(Entry.TextProperty, "Contact.Email");
 
-            
+
             var saveButton = new Button { Text = "Save" };
             saveButton.Clicked += saveButton_Clicked;
-            
+
             var deleteButton = new Button { Text = "Delete" };
             deleteButton.Clicked += deleteButton_Clicked;
 
@@ -49,10 +51,10 @@ namespace SharePointPTSample.Views
             {
                 deleteButton.IsEnabled = false;
             }
-          
+
             var cancelButton = new Button { Text = "Cancel" };
             cancelButton.Clicked += cancelButton_Clicked;
-            
+
             var stackPanel = new StackLayout
             {
                 VerticalOptions = LayoutOptions.StartAndExpand,

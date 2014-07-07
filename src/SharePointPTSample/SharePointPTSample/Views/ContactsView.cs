@@ -36,7 +36,7 @@ namespace SharePointPTSample.Views
 
                 _listView = new ListView
                 {
-                    RowHeight = 40,
+                    RowHeight = 80,
                     ItemTemplate = new DataTemplate(typeof(ContactItemCell))
                 };
                 _listView.SetBinding(ListView.ItemsSourceProperty, "Contacts");

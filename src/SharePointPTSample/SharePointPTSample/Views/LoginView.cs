@@ -26,7 +26,7 @@ namespace SharePointPTSample.Views
             }
             NavigationPage.SetHasNavigationBar(this, true);
 
-            var userLabel = new Label {Text = "UserName: "};
+            var userLabel = new Label { Text = "User Name: " };
             var userEntry = new Entry();
             userEntry.SetBinding(Entry.TextProperty, new Binding("UserName", BindingMode.TwoWay));
 
