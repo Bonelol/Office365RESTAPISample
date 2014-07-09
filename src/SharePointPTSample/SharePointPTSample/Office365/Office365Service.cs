@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -74,8 +75,12 @@ namespace SharePointPTSample.Office365
             createResponse["@odata.type"] = "#Microsoft.Exchange.Services.OData.Model.Contact";
             createResponse["DisplayName"] = contact.Name;
             createResponse["EmailAddress1"] = contact.Email;
-            request.Content = new StringContent(JsonConvert.SerializeObject(createResponse), Encoding.UTF8, "application/json");
-            
+
+            // this field is required!!!
+            createResponse["GivenName"] = contact.Name;
+            request.Content = new StringContent(JsonConvert.SerializeObject(createResponse));
+            request.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
             var response = await client.SendAsync(request);
             if (response.IsSuccessStatusCode)
             {
