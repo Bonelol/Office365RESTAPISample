@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using SharePointPTSample.Office365;
+using SharePointPTSample.Views;
 
 namespace SharePointPTSample.ViewModels
 {
@@ -16,24 +17,40 @@ namespace SharePointPTSample.ViewModels
 
         public async Task<bool> DeleteContact()
         {
-            return await _office365Service.DeleteContact(Contact);
+            var result = await _office365Service.DeleteContact(Contact);
+            if (result)
+            {
+                ContactsView.Contacts.Remove(Contact);
+            }
+            return result;
         }
 
         public async Task<bool> SaveContact()
         {
             if (string.IsNullOrEmpty(_contact.EditLink))
             {
-                return await _office365Service.CreateContact(Contact);
+                var createdResult = await _office365Service.CreateContact(Contact);
+                if (createdResult)
+                {
+                    ContactsView.Contacts.Add(Contact);
+                }
+
+                return createdResult;
             }
-            return await _office365Service.UpdateContact(Contact);
+            var index = ContactsView.Contacts.IndexOf(Contact);
+            var updatedResult = await _office365Service.UpdateContact(Contact);
+
+            if (updatedResult)
+            {
+                ContactsView.Contacts[index] = Contact;
+            }
+
+            return updatedResult;
         }
 
-        public Contact Contact 
+        public Contact Contact
         {
-            get
-            {
-                return _contact;
-            }
+            get { return _contact; }
             set
             {
                 if (Set(() => Contact, ref _contact, value))
@@ -41,5 +58,6 @@ namespace SharePointPTSample.ViewModels
                     RaisePropertyChanged(() => Contact);
                 }
             }
-        }}
+        }
+    }
 }

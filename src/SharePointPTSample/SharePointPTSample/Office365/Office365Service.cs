@@ -12,7 +12,7 @@ namespace SharePointPTSample.Office365
     public class Office365Service : IOffice365Service
     {
         private const string _getMe = "https://outlook.office365.com/ews/odata/Me/";
-        private const string _getContactsUrl = "https://outlook.office365.com/ews/odata/Me/Contacts?$select=DisplayName,EmailAddress1";
+        private const string _getContactsUrl = "https://outlook.office365.com/ews/odata/Me/Contacts?$select=GivenName,EmailAddress1";
         private IEnumerable<Contact> _contacts;
         private string _user;
         private string _password;
@@ -73,9 +73,7 @@ namespace SharePointPTSample.Office365
             request.Headers.Add("Authorization", auth);
             var createResponse = new JObject();
             createResponse["@odata.type"] = "#Microsoft.Exchange.Services.OData.Model.Contact";
-            createResponse["DisplayName"] = contact.Name;
             createResponse["EmailAddress1"] = contact.Email;
-
             // this field is required!!!
             createResponse["GivenName"] = contact.Name;
             request.Content = new StringContent(JsonConvert.SerializeObject(createResponse));
@@ -99,7 +97,7 @@ namespace SharePointPTSample.Office365
             var auth = "Basic " + Convert.ToBase64String(Encoding.UTF8.GetBytes(_user + ":" + _password));
             request.Headers.Add("Authorization", auth);
             var updateRequest = new JObject();
-            updateRequest["DisplayName"] = contact.Name;
+            updateRequest["GivenName"] = contact.Name;
             updateRequest["EmailAddress1"] = contact.Email;
             request.Content = new StringContent(JsonConvert.SerializeObject(updateRequest), Encoding.UTF8, "application/json");
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using SharePointPTSample.Office365;
 using SharePointPTSample.ViewModels;
@@ -11,16 +12,16 @@ namespace SharePointPTSample.Views
     {
         private readonly ContactsViewModel _viewModel;
         private readonly ListView _listView;
-        private bool _iscreating;
+   
         public ContactsView()
         {
             try
             {
                 _viewModel = App.Locator.ContactsViewModel;
                 BindingContext = _viewModel;
-                _viewModel.PropertyChanged += _viewModel_PropertyChanged;
-                _viewModel.LoadAsync();
-                _iscreating = true;
+                _viewModel.PropertyChanged += ViewModel_PropertyChanged;
+               
+
                 Title = "Contacts";
                 Label title = null;
                 if (Device.OS == TargetPlatform.WinPhone)
@@ -48,6 +49,7 @@ namespace SharePointPTSample.Views
                     }
                     _listView.SelectedItem = null;
                 };
+                _viewModel.LoadAsync();
 
                 // the root control
                 var stackPanel = new StackLayout
@@ -74,11 +76,15 @@ namespace SharePointPTSample.Views
             }
         }
 
-        private void _viewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        // I will use it until add database
+        public static ObservableCollection<Contact> Contacts { get; set; }
+
+        private void ViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "Contacts")
             {
                 _listView.ItemsSource = _viewModel.Contacts;
+                Contacts = _viewModel.Contacts; ;
             }
         }
         
@@ -88,7 +94,7 @@ namespace SharePointPTSample.Views
             await Navigation.PushAsync(editContactView);
         }
 
-        private void CreatToolbarItems()
+        private void CreateToolbarItems()
         {
             var tbi = new ToolbarItem("+", null, async () =>
             {
@@ -123,27 +129,9 @@ namespace SharePointPTSample.Views
 
         protected override void OnAppearing()
         {
-           
-            base.OnAppearing();
-
-            try
-            {
-                if (_iscreating)
-                {
-                    //in this case i called the LoadAsync in constructor
-                    _iscreating = false;
-                }
-                else
-                {
-                    _viewModel.LoadAsync();
-                }
-                CreatToolbarItems();
-            }
-            catch (Exception exception)
-            {   
-                // todo handle the error
-                var error = exception.ToString();
-            }
+           base.OnAppearing();
+            _listView.ItemsSource = Contacts;
+            CreateToolbarItems();
         }
     }
 }

@@ -18,7 +18,7 @@ namespace SharePointPTSample.Office365
         public string Id { get; set; }
         [JsonProperty(PropertyName = "EmailAddress1")]
         public string Email { get; set; }
-        [JsonProperty(PropertyName = "DisplayName")]
+        [JsonProperty(PropertyName = "GivenName")]
         public string Name { get; set; }
          [JsonProperty(PropertyName = "@odata.editLink")]
         public string EditLink { get; set; }
