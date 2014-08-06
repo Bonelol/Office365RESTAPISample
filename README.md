@@ -7,7 +7,9 @@ This sample is based in this article:
 
 
 This sample was created after I tried to use the Office365 API Preview, see more in my initial sample that is now updated (but not complete!):
+
 [Office365 API PREVIEW In Xamarin Apps][1]
+
 [Office 365 API Tools for Visual Studio– Building Office 365 Android Apps with Xamarin][2]
 
 [1]: https://github.com/saramgsilva/Office365InXamarinApp
